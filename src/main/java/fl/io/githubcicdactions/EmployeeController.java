@@ -36,4 +36,10 @@ public class EmployeeController {
         employeeRepository.save(employee1);
         return ResponseEntity.ok(employee1);
     }
+    
+     @GetMapping("/get_one/{id}")
+    public HttpEntity<?> getOne(@PathVariable Integer id){
+        Employee employee = employeeRepository.findById(id).orElseGet(Employee::new);
+        return ResponseEntity.ok(employee);
+    }
 }
