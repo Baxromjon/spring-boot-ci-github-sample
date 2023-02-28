@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/employee")
@@ -23,5 +24,16 @@ public class EmployeeController {
     public HttpEntity<?> getAll() {
         List<Employee> all = employeeRepository.findAll();
         return ResponseEntity.ok(all);
+    }
+
+    @PostMapping("/edit/{id}")
+    public HttpEntity<?> edit(@PathVariable Integer id, @RequestBody EmployeeDTO employee) {
+        Optional<Employee> optional = employeeRepository.findById(id);
+        Employee employee1 = optional.get();
+        employee1.setDept(employee.getDept());
+        employee1.setName(employee.getName());
+        employee1.setSalary(employee.getSalary());
+        employeeRepository.save(employee1);
+        return ResponseEntity.ok(employee1);
     }
 }
