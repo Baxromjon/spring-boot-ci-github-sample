@@ -42,4 +42,9 @@ public class EmployeeController {
         Employee employee = employeeRepository.findById(id).orElseGet(Employee::new);
         return ResponseEntity.ok(employee);
     }
+    @DeleteMapping("/delete/{id}")
+    public HttpEntity<?> delete(@PathVariable Integer id){
+        employeeRepository.deleteById(id);
+        return ResponseEntity.ok("Successfully deleted");
+    }
 }
